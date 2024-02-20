@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2> {% block title %} Home {% endblock title %} </h2>
+{% endblock header %}
+
+{% block content %}
+    <table class="center">
+    {% for exercise in exercises %}
+    <tr>
+        <th>{{ exercise["name"] }}</th>
+        <th>{{ exercise["type"] }}</th>
+        <th>
+          <button onclick="change_speed('-',
+            '{{ exercise["name"] }}', '{{ exercise["type"] }}');">-</button>
+        </th>
+        <th id="{{ exercise["name"] }}_{{ exercise["type"] }}_sp">{{ exercise["speed"] }}</th>
+        <th>
+          <button onclick="change_speed('+',
+            '{{ exercise["name"] }}', '{{ exercise["type"] }}');">+</button>
+        </th>
+    </tr>
+    {% endfor %}
+    </table>
+{% endblock content %}
+
+{% block script %}
+<script>
+  function change_speed(dir, name, type){
+    id = name + "_" + type + "_sp"
+    speed_elem = document.getElementById(id);
+    speed = parseInt(speed_elem.innerText);
+    var new_speed = 0
+    if (dir == '+'){
+      new_speed = speed + 5;
+    }
+    else{
+      new_speed = speed - 5;
+    }
+    speed_elem.innerText = new_speed.toString();
+    console.log(dir, id, new_speed);
+
+    var entry = {
+      name: name,
+      type: type,
+      new_speed: new_speed
+    }
+
+    fetch(`${window.origin}/change-speed`, {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify(entry),
+      cache: "no-cache",
+      headers: new Headers({
+        "content-type": "application/json"
+      })
+    })
+      .then( function(response) {
+        if(response.status !== 200){
+          console.log('Response status was not 200; ${response.status}');
+          alert("Server error");
+          return;
+        }
+        response.json().then(function (data){
+          console.log(data);
+        })
+      })
+  }
+</script>
+{% endblock script %}
+

@@ -1,0 +1,4 @@
+.env
+.mypy_cache/
+skaling.sqlite
+skaling/__pycache__/

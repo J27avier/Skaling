@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> SKaling - {% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename="styles.css") }}">
+</head>
+<body>
+    <h1> SKaling </h1>
+    {% include("_navigation.html") %}
+    <section>
+        <header>
+            {% block header %}{% endblock header %}
+        </header>
+        <main>
+            {% block content %}
+            {% endblock content %}
+        </main>
+    </section>
+    {% block script %}{% endblock script %}
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2> {% block title %} Home {% endblock title %} </h2>
+{% endblock header %}
+
+{% block content %}
+    <table class="center">
+    {% for exercise in exercises %}
+    <tr>
+        <th>{{ exercise["name"] }}</th>
+        <th>{{ exercise["type"] }}</th>
+        <th>
+            <form method="post">
+                <input type="hidden" name="name" id="name" value="{{ exercise["name"] }}">
+                <input type="hidden" name="type" id="type" value="{{ exercise["type"] }}">
+                <input type="hidden" name="speed" id="speed" value="{{ exercise["speed"] }}">
+                <input type="hidden" name="dir" id="direction" value="dec">
+                <input type="submit" value="-" class="submit-btn">
+            </form>
+        </th>
+        <th>{{ exercise["speed"] }}</th>
+        <th>
+            <form method="post">
+                <input type="hidden" name="name" id="name" value="{{ exercise["name"] }}">
+                <input type="hidden" name="type" id="type" value="{{ exercise["type"] }}">
+                <input type="hidden" name="speed" id="speed" value="{{ exercise["speed"] }}">
+                <input type="hidden" name="dir" id="direction" value="inc">
+                <input type="submit" value="+" class="submit-btn">
+            </form>
+        </th>
+    </tr>
+    {% endfor %}
+    </table>
+{% endblock content %}
+

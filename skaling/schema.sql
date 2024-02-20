@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS scales;
+
+CREATE TABLE scales (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    type TEXT NOT NULL,
+    speed INTEGER
+);
